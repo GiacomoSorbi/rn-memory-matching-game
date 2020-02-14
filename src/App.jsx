@@ -1,16 +1,30 @@
-import React, {useState} from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
-import SettingsModal from './components/SettingsModal'
+import React, { useState } from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
+import { generateBoard } from "./utils";
+import CardContainer from "./components/CardContainer";
+// import SettingsModal from "./components/SettingsModal";
 
 export default function App() {
-  const [isSettingsModalVisible, setSettingsModalVisible] = useState(false)
-  const toggleSettingsModal = () => setSettingsModalVisible(!isSettingsModalVisible)
+  // const [isSettingsModalVisible, setSettingsModalVisible] = useState(false);
+  const [cards, setCards] = useState([]);
+  const onGameStart = () => setCards(generateBoard(12));
+  // const toggleSettingsModal = () =>
+  //   setSettingsModalVisible(!isSettingsModalVisible);
 
   return (
     <View style={styles.container}>
-      <Text>visible: {"" + isSettingsModalVisible}</Text>
-      <Button title="Press me" onPress={toggleSettingsModal} />
-      <SettingsModal visible={isSettingsModalVisible} />
+      {cards.length ? (
+        <>
+          <CardContainer cards={cards} />
+          <Button title="Restart" onPress={onGameStart} />
+        </>
+      ) : (
+        <>
+          <Text>Test your memory!</Text>
+          <Button title="Start" onPress={onGameStart} />
+        </>
+      )}
+      {/* <SettingsModal visible={isSettingsModalVisible} /> */}
     </View>
   );
 }
@@ -18,8 +32,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center"
+  }
 });
